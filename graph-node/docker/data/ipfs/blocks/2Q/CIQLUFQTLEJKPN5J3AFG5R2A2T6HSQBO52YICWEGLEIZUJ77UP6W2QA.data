@@ -1,0 +1,177 @@
+
+ñ+é+dataSources:
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmZvFuFtacHgAnioUhVRQEkhJfBZwMjWNCvpf85pHQs1Vp
+          name: MarketPlace
+      apiVersion: 0.0.7
+      entities:
+        - MarketItemListed
+        - MarketItemPurchased
+        - MarketItemRemoved
+      eventHandlers:
+        - event: >-
+            MarketItemListed(uint256,indexed address,indexed
+            address,uint256,indexed address,uint256,uint256)
+          handler: handleMarketItemListed
+        - event: >-
+            MarketItemPurchased(uint256,indexed address,indexed
+            address,uint256,address,address,uint256,uint256,uint256)
+          handler: handleMarketItemPurchased
+        - event: >-
+            MarketItemRemoved(uint256,indexed address,indexed
+            address,uint256,indexed address,string)
+          handler: handleMarketItemRemoved
+      file:
+        /: /ipfs/QmaQ5gcVr3Vn7hscPfuwq2eVZYMPWs2QWjka7Hjva1dc1h
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: MarketPlace
+    network: mainnet
+    source:
+      abi: MarketPlace
+      address: '0x9B8397f1B0FEcD3a1a40CdD5E8221Fa461898517'
+      startBlock: 100
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmYaFBcQscHxcMqCyDrsAkervkRWZE39P4fkWxdNN81qds
+          name: DeployManager
+      apiVersion: 0.0.7
+      entities:
+        - ERC1155ContractDeployed
+        - ERC20ContractDeployed
+      eventHandlers:
+        - event: ERC1155ContractDeployed(indexed address,string,string,string,string)
+          handler: handleERC1155ContractDeployed
+        - event: ERC20ContractDeployed(indexed address,string,string,uint8)
+          handler: handleERC20ContractDeployed
+      file:
+        /: /ipfs/QmRjkxaYreqXi6PcukJgrvgHUWHtm2cX2iWGbLxMa9RgrV
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: DeployManager
+    network: mainnet
+    source:
+      abi: DeployManager
+      address: '0xfeae27388A65eE984F452f86efFEd42AaBD438FD'
+      startBlock: 100
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmYCf5SJHVraFu5Z9PMFr8baYut1wph6i31aJb1gnsCTKB
+          name: SanctionList
+      apiVersion: 0.0.7
+      entities:
+        - AddSanction
+        - RemoveSanction
+      eventHandlers:
+        - event: AddSanction(indexed address)
+          handler: handleAddSanction
+        - event: RemoveSanction(indexed address)
+          handler: handleRemoveSanction
+      file:
+        /: /ipfs/Qmb5a4hFcPNDYczgWv9gAMwMJsSEJznfGkGQ6w5ZDXZeGr
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: SanctionList
+    network: mainnet
+    source:
+      abi: SanctionList
+      address: '0xa50a51c09a5c451C52BB714527E1974b686D8e77'
+      startBlock: 100
+schema:
+  file:
+    /: /ipfs/QmWBSmv8vJ3erxEUrfPn1whZNq31ZkxR9oTkeRyRsPmNyX
+specVersion: 0.0.5
+templates:
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmY2W3uZqeEoxRvbq5XrTSzWd5fwSAM2TF2qht7wqjnMsW
+          name: ERC20Token
+      apiVersion: 0.0.7
+      entities:
+        - ERC20Burn
+        - ERC20Mint
+        - ERC20Paused
+        - ERC20Transfer
+        - ERC20Unpaused
+      eventHandlers:
+        - event: Burn(indexed address,indexed uint256)
+          handler: handleBurn
+        - event: Mint(indexed address,indexed uint256)
+          handler: handleMint
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file:
+        /: /ipfs/QmbxbMdEX4FqSD36EKLbahTa9jJcDbZzWay9mspvP1Muw9
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: ERC20Token
+    network: mainnet
+    source:
+      abi: ERC20Token
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmWoWXNhT8W8mWvP793bxSLMkhh5s6qJZaSy3TmJ7RofXU
+          name: ERC1155Token
+      apiVersion: 0.0.7
+      entities:
+        - ERC1155TokenBurn
+        - ERC1155BurnBatch
+        - ERC1155TokenMint
+        - ERC1155MintBatch
+        - ERC1155TokenPaused
+        - ERC1155TransferBatch
+        - ERC1155TransferSingle
+        - URI
+        - ERC1155TokenUnpaused
+        - ERC1155TokenUpgraded
+      eventHandlers:
+        - event: Burn(indexed address,uint256,uint256)
+          handler: handleERC1155Burn
+        - event: BurnBatch(indexed address,uint256[],uint256[])
+          handler: handleBurnBatch
+        - event: Mint(indexed address,string,string,string,string,uint256,uint256)
+          handler: handleERC1155Mint
+        - event: >-
+            MintBatch(indexed
+            address,string,string,string,string[],uint256[],uint256[])
+          handler: handleMintBatch
+        - event: Paused(address)
+          handler: handlePaused
+        - event: >-
+            TransferBatch(indexed address,indexed address,indexed
+            address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: >-
+            TransferSingle(indexed address,indexed address,indexed
+            address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file:
+        /: /ipfs/QmZBuKoU6drwkBaBCBTVHpUNvWjaWMnCYy8H5hSVnZmaBM
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: ERC1155Token
+    network: mainnet
+    source:
+      abi: ERC1155Token
+é+

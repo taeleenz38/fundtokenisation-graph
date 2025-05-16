@@ -1,0 +1,271 @@
+
+Î3Æ3type MarketItemListed @entity {
+  id: ID!
+  listingId: BigInt! # uint256
+  erc1155Address: Bytes! # address
+  erc20Address: Bytes! # address
+  erc20TokenName: String! # String
+  tokenId: BigInt! # uint256
+  seller: Bytes! # address
+  unitPrice: BigInt! # uint256
+  quantity: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MarketItemPurchased @entity(immutable: true) {
+  id: Bytes!
+  listingId: BigInt! #uint256
+  erc1155Address: Bytes! # address
+  erc20Address: Bytes! # address
+  tokenId: BigInt! # uint256
+  buyer: Bytes! # address
+  seller: Bytes! # address
+  unitPrice: BigInt! # uint256
+  quantity: BigInt! # uint256
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MarketItemRemoved @entity(immutable: true) {
+  id: Bytes!
+  listingId: BigInt! # uint256
+  erc1155Address: Bytes! # address
+  erc20Address: Bytes! # address
+  tokenId: BigInt! # uint256
+  seller: Bytes! # address
+  removedType: String # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ERC1155ContractDeployed @entity(immutable: true) {
+  id: Bytes!
+  erc1155Token: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String # string
+  baseUri: String! # string
+  metaDataUri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ERC20ContractDeployed @entity(immutable: true) {
+  id: Bytes!
+  erc20Token: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String! # string
+  tokenDecimal: BigInt!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC20Burn @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC20Mint @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC20Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC20Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC20Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ERC1155TokenBurn @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  tokenId: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155BurnBatch @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  amounts: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TokenMint @entity(immutable: true) {
+  id: ID!
+  to: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String # string
+  tokenVersion: String # string
+  uri: String! # string
+  tokenId: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155MintBatch @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String # string
+  tokenVersion: String # string
+  uris: [String!]! # string[]
+  tokenIds: [BigInt!]! # uint256[]
+  amounts: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TokenPaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TransferBatch @entity(immutable: true) {
+  id: Bytes!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  ids: [BigInt!]! # uint256[]
+  values: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TransferSingle @entity(immutable: true) {
+  id: Bytes!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  ERC1155Token_id: BigInt! # uint256
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type URI @entity(immutable: true) {
+  id: ID!
+  value: String! # string
+  ERC1155Token_id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TokenUnpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ERC1155TokenUpgraded @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type UserTokenBalance @entity {
+  id: ID!
+  contractAddress: Bytes! # address
+  tokenId: BigInt!
+  balance: BigInt!
+  owner: Bytes! # address
+  tokenName: String # string
+  tokenSymbol: String # string
+  tokenVersion: String # string
+  metaDataUri: String # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type UserERC20TokenBalance @entity {
+  id: ID!
+  contractAddress: Bytes! # address
+  balance: BigInt!
+  owner: Bytes! # address
+  tokenName: String # string
+  tokenSymbol: String # string
+  tokenVersion: String # string
+  tokenDecimal: BigInt!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenDeployed @entity {
+  id: ID!
+  tokenAddress: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String! # string
+  tokenDecimal: BigInt
+  metaDataUri: String # string
+  tokenType: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MarketPlaceItem @entity {
+  id: ID!
+  tokenId: BigInt!
+  tokenAddress: Bytes! # address
+  tokenName: String! # string
+  tokenSymbol: String # string
+  metaDataUri: String # string
+  listingCounter: BigInt!
+  owner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type AddSanction @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RemoveSanction @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}Æ3
