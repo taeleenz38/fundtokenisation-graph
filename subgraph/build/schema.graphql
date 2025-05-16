@@ -1,270 +1,196 @@
-type MarketItemListed @entity {
-  id: ID!
-  listingId: BigInt! # uint256
-  erc1155Address: Bytes! # address
-  erc20Address: Bytes! # address
-  erc20TokenName: String! # String
-  tokenId: BigInt! # uint256
-  seller: Bytes! # address
-  unitPrice: BigInt! # uint256
-  quantity: BigInt! # uint256
+type PriceAdded @entity(immutable: true) {
+  id: Bytes!
+  priceId: BigInt! # uint256
+  price: BigInt! # uint256
+  date: String!
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  status: String!
+}
+
+type PriceUpdated @entity(immutable: true) {
+  id: Bytes!
+  priceId: BigInt! # uint256
+  oldPrice: BigInt! # uint256
+  newPrice: BigInt! # uint256
+  date: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type MarketItemPurchased @entity(immutable: true) {
+type LatestPriceUpdated @entity(immutable: false) {
   id: Bytes!
-  listingId: BigInt! #uint256
-  erc1155Address: Bytes! # address
-  erc20Address: Bytes! # address
-  tokenId: BigInt! # uint256
-  buyer: Bytes! # address
-  seller: Bytes! # address
-  unitPrice: BigInt! # uint256
-  quantity: BigInt! # uint256
-  totalPrice: BigInt! # uint256
+  priceId: BigInt! # uint256
+  price: BigInt! # uint256
+  date: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  status: String!
 }
 
-type MarketItemRemoved @entity(immutable: true) {
-  id: Bytes!
-  listingId: BigInt! # uint256
-  erc1155Address: Bytes! # address
-  erc20Address: Bytes! # address
-  tokenId: BigInt! # uint256
-  seller: Bytes! # address
-  removedType: String # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type PriceIdIndex @entity(immutable: false) {
+  id: ID!  # `priceId` as a string
+  latestPriceId: Bytes!  # The ID of the LatestPriceUpdated entity
 }
 
-type ERC1155ContractDeployed @entity(immutable: true) {
-  id: Bytes!
-  erc1155Token: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String # string
-  baseUri: String! # string
-  metaDataUri: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type ERC20ContractDeployed @entity(immutable: true) {
-  id: Bytes!
-  erc20Token: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String! # string
-  tokenDecimal: BigInt!
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC20Burn @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC20Mint @entity(immutable: true) {
-  id: Bytes!
-  to: Bytes! # address
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC20Paused @entity(immutable: true) {
+type AccountStatusSetByAdmin @entity(immutable: true) {
   id: Bytes!
   account: Bytes! # address
+  termIndex: BigInt! # uint256
+  date: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  status: Boolean!
 }
-type ERC20Transfer @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  to: Bytes! # address
-  value: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+
+type AccountStatusSetByIndex @entity(immutable: false) {
+  id: ID!  # `account` as a string
+  accountStatusSetByAdmin: Bytes!  # The ID of the AccountStatusSetByAdmin entity
 }
-type ERC20Unpaused @entity(immutable: true) {
+
+type LatestUniqueAccountStatusSetByAdmin @entity(immutable: false) {
   id: Bytes!
   account: Bytes! # address
+  termIndex: BigInt! # uint256
+  date: String!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  status: Boolean!
+}
+
+type MintRequested @entity(immutable: false) {
+  id: Bytes! # use depositId
+  user: Bytes! # address
+  collateralAmountDeposited: BigInt! # uint256
+  depositAmountAfterFee: BigInt! # uint256
+  feeAmount: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type ERC1155TokenBurn @entity(immutable: true) {
+type PendingDepositRequest @entity(immutable: false) {
   id: Bytes!
-  from: Bytes! # address
-  tokenId: BigInt! # uint256
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  user: Bytes! # address
+  collateralAmountDeposited: BigInt! # uint256
+  depositAmountAfterFee: BigInt! # uint256
+  feeAmount: BigInt! # uint256
+  priceId: BigInt # Optional, corresponds to priceId in the response class
+  claimableTimestamp: String # Optional, corresponds to claimableTimestamp in the response class
+  status: String # Optional, corresponds to status in the response class
+  price: BigInt # Optional, corresponds to price in the response class
+  requestTimestamp: String # Optional, corresponds to requestTimestamp in the response class
+  claimableAmount: BigInt
 }
-type ERC1155BurnBatch @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  tokenIds: [BigInt!]! # uint256[]
-  amounts: [BigInt!]! # uint256[]
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+
+type DepositTransactionHistory @entity(immutable: false) {
+  id: Bytes! # depositId
+  user: Bytes! # address
+  stableAmount: BigInt # Optional, storing as BigInt
+  collateralAmount: BigInt # uint256
+  feeAmount: BigInt # uint256
+  tokenAmount: BigInt # Optional, storing as BigInt
+  type: String! # Type is required, storing as String
+  currency: String # Optional, storing as String
+  status: String # Optional, storing as String
+  price: BigInt # Optional, storing as BigInt
+  requestTime: String # Optional, storing as BigInt (timestamp)
+  completedTime: String # Optional, storing as BigInt (timestamp)
+  transactionDate: String # Optional, storing as BigInt (timestamp)
 }
-type ERC1155TokenMint @entity(immutable: true) {
-  id: ID!
-  to: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String # string
-  tokenVersion: String # string
-  uri: String! # string
-  tokenId: BigInt! # uint256
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155MintBatch @entity(immutable: true) {
-  id: Bytes!
-  to: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String # string
-  tokenVersion: String # string
-  uris: [String!]! # string[]
-  tokenIds: [BigInt!]! # uint256[]
-  amounts: [BigInt!]! # uint256[]
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155TokenPaused @entity(immutable: true) {
-  id: Bytes!
-  account: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155TransferBatch @entity(immutable: true) {
-  id: Bytes!
-  operator: Bytes! # address
-  from: Bytes! # address
-  to: Bytes! # address
-  ids: [BigInt!]! # uint256[]
-  values: [BigInt!]! # uint256[]
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155TransferSingle @entity(immutable: true) {
-  id: Bytes!
-  operator: Bytes! # address
-  from: Bytes! # address
-  to: Bytes! # address
-  ERC1155Token_id: BigInt! # uint256
-  value: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type URI @entity(immutable: true) {
-  id: ID!
-  value: String! # string
-  ERC1155Token_id: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155TokenUnpaused @entity(immutable: true) {
-  id: Bytes!
-  account: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type ERC1155TokenUpgraded @entity(immutable: true) {
-  id: Bytes!
-  implementation: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type UserTokenBalance @entity {
-  id: ID!
-  contractAddress: Bytes! # address
-  tokenId: BigInt!
-  balance: BigInt!
-  owner: Bytes! # address
-  tokenName: String # string
-  tokenSymbol: String # string
-  tokenVersion: String # string
-  metaDataUri: String # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type UserERC20TokenBalance @entity {
-  id: ID!
-  contractAddress: Bytes! # address
-  balance: BigInt!
-  owner: Bytes! # address
-  tokenName: String # string
-  tokenSymbol: String # string
-  tokenVersion: String # string
-  tokenDecimal: BigInt!
+
+type MintCompleted @entity(immutable: true) {
+  id: Bytes! # use depositId
+  user: Bytes! # address
+  rwaAmountOut: BigInt! # uint256
+  collateralAmountDeposited: BigInt! # uint256
+  price: BigInt! # uint256
+  priceId: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type TokenDeployed @entity {
-  id: ID!
-  tokenAddress: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String! # string
-  tokenDecimal: BigInt
-  metaDataUri: String # string
-  tokenType: String! # string
+type RedemptionRequested @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  redemptionId: Bytes!
+  rwaAmountIn: BigInt! # uint256
+  collateralType: String!  
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type MarketPlaceItem @entity {
-  id: ID!
-  tokenId: BigInt!
-  tokenAddress: Bytes! # address
-  tokenName: String! # string
-  tokenSymbol: String # string
-  metaDataUri: String # string
-  listingCounter: BigInt!
-  owner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-type AddSanction @entity(immutable: true) {
+type RedemptionCompleted @entity(immutable: true) {
   id: Bytes!
-  _address: Bytes! # address
+  user: Bytes! # address
+  redemptionId: Bytes!
+  rwaAmountRequested: BigInt! # uint256
+  collateralAmountReturned: BigInt! # uint256
+  price: BigInt! # uint256
+  collateralType: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type RemoveSanction @entity(immutable: true) {
+type PriceIdSetForRedemption @entity(immutable: true) {
   id: Bytes!
-  _address: Bytes! # address
+  redemptionIdSet: Bytes!
+  priceIdSet: BigInt!
+  collateralType: Bytes!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+}
+
+type RedemptionRequest @entity(immutable: false){
+  id: Bytes! # use redemptionId + collateralType
+  redemptionId: Bytes!
+  user: Bytes! # address;
+  rwaAmountIn: BigInt! # uint256
+  priceId: BigInt # uint256
+  requestTimestamp: String!
+  blockTimestamp: BigInt!
+  price: BigInt # uint256
+  requestedRedeemAmount: BigInt # uint256
+  requestedRedeemAmountAfterFee: BigInt # uint256
+  feeAmount: BigInt # uint256
+  status: String!
+  claimApproved: Boolean!
+  redeemAmount: BigInt
+  collateralType: String!
+  tokenAmount: BigInt
+  displayId: String!
+}
+
+type RedemptionApproved @entity(immutable: true) {
+  id: Bytes!
+  redemptionIdSet: Bytes!
+  collateralType: String!
+}
+
+type RedemptionTransactionHistory @entity(immutable: false) {
+  id: Bytes! # redemptionId
+  user: Bytes! # address
+  stableAmount: BigInt # Optional, storing as BigInt
+  collateralAmount: BigInt # uint256
+  feeAmount: BigInt # uint256
+  tokenAmount: BigInt # Optional, storing as BigInt
+  type: String! # Type is required, storing as String
+  currency: String # Optional, storing as String
+  status: String # Optional, storing as String
+  price: BigInt # Optional, storing as BigInt
+  requestTime: String # Optional, storing as BigInt (timestamp)
+  completedTime: String # Optional, storing as BigInt (timestamp)
+  transactionDate: String # Optional, storing as BigInt (timestamp)
+  collateralType: String!
+  displayId: String!
 }

@@ -1,0 +1,78 @@
+
+ÜÔdataSources:
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmXeSUBdpgrBpLTnTbxDHyMhrq1a9V7V5efjKoQfrXpfjk
+          name: AllowlistUpgradeable
+      apiVersion: 0.0.7
+      entities:
+        - AllowlistEntity
+      eventHandlers:
+        - event: AccountStatusSetByAdmin(indexed address,indexed uint256,bool)
+          handler: handleAccountStatusSetByAdmin
+      file:
+        /: /ipfs/QmXZDLcRGyZXKFfKHyzRKX8TGEDVBduJG4JzqW41h2Rc5H
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: AllowlistUpgradeable
+    network: mainnet
+    source:
+      abi: AllowlistUpgradeable
+      address: '0x13db1cab398ed9b2c3562b4b9ccaa4c57fa17c43'
+      startBlock: 1
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmPpnEpnNaFM9dgT8GufGPTQMCjhmBKij8wNKFxGBybHUt
+          name: AYFManager
+      apiVersion: 0.0.7
+      entities:
+        - MintRequested
+        - PriceIdSetForDeposit
+        - PriceIdSetForRedemption
+        - RedemptionRequested
+        - RedemptionCompleted
+        - RedemptionRequest
+      eventHandlers:
+        - event: >-
+            MintRequested(indexed address,indexed
+            bytes32,uint256,uint256,uint256)
+          handler: handleMintRequestedEvent
+        - event: PriceIdSetForDeposit(indexed bytes32,indexed uint256)
+          handler: handlePriceIdSetForDepositEvent
+        - event: ClaimableTimestampSet(indexed uint256,indexed bytes32)
+          handler: handleClaimableTimestampSetEvent
+        - event: >-
+            MintCompleted(indexed address,indexed
+            bytes32,uint256,uint256,uint256,uint256)
+          handler: handleMintCompletedEvent
+        - event: RedemptionRequested(indexed address,indexed bytes32,uint256,bytes32)
+          handler: handleRedemptionRequestedEvent
+        - event: >-
+            RedemptionCompleted(indexed address,indexed
+            bytes32,uint256,uint256,uint256,bytes32)
+          handler: handleRedemptionCompletedEvent
+        - event: PriceIdSetForRedemption(indexed bytes32,indexed uint256,bytes32)
+          handler: handlePriceIdSetForRedemption
+        - event: RedemptionApproved(indexed bytes32,bytes32)
+          handler: handleRedemptionApproved
+      file:
+        /: /ipfs/QmZVrsGiS1Sqqx5u3ZKCGQg4v4yMYGPPWEb2o8aUw4M9NJ
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: AYFManager
+    network: mainnet
+    source:
+      abi: AYFManager
+      address: '0x915e15a97ece2f3d30912eef1fd5e8adb08c0019'
+      startBlock: 1
+indexerHints:
+  prune: auto
+schema:
+  file:
+    /: /ipfs/QmSUmGaartRQP2QMHANwk7ttMNqLh5GtmWUKxCs8JN6QTi
+specVersion: 1.0.0
+Ô

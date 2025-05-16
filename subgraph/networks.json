@@ -1,20 +1,8 @@
 {
-  "ethereum": {
-    "MultiToken": {
-      "address": "0x44c97be907830e50FAa27E48c9f0A823d5216037",
-      "startBlock": 0
-    },
-    "RequestManager": {
-      "address": "0x8DE3D68AAa9367BFD04b54431e062B338639C6CF"
-    },
-    "MarketPlace": {
-      "address": "0x0A9FF26E83e03796cd14b234f1fb2E1df6bfE374"
-    },
-    "DeployManager": {
-      "address": "0x625c70BAf2DFB2cF06Cf6673E6bBad1672427605"
-    },
-    "Contract": {
-      "address": "0x59E769DD3148E3C78832D0897A70ddb21850351F"
+  "sepolia": {
+    "Pricer": {
+      "address": "0xe51249B69E0a8e15E7eBCb1Ff3c824901820Ef6c",
+      "startBlock": 6489018
     }
   }
 }

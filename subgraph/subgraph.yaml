@@ -5,35 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Pricer
-    network: sepolia
-    source:
-      address: "0x39b4950338A66A73e6c686c289B1Beaf97430Df2"
-      abi: Pricer
-      startBlock: 8000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PriceAdded
-        - PriceUpdated
-      abis:
-        - name: Pricer
-          file: ./abis/Pricer.json
-      eventHandlers:
-        - event: PriceAdded(indexed uint256,uint256,uint256)
-          handler: handlePriceAdded
-        - event: PriceUpdated(indexed uint256,uint256,uint256)
-          handler: handlePriceUpdated
-      file: ./src/pricer.ts
-  - kind: ethereum
     name: AllowlistUpgradeable
-    network: sepolia
+    network: mainnet
     source:
-      address: "0xf10922e8470610bc06DB7CE494Aeb8ACCada8fE2"
+      address: "0xd1f308f8a7c9b73191b999ca7e9fc5b0a101e596"
       abi: AllowlistUpgradeable
-      startBlock: 8000000
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -46,14 +23,14 @@ dataSources:
       eventHandlers:
         - event: AccountStatusSetByAdmin(indexed address,indexed uint256,bool)
           handler: handleAccountStatusSetByAdmin
-      file: ./src/allowList.ts
+      file: ./src/allowList.ts   
   - kind: ethereum
     name: AYFManager
-    network: sepolia
+    network: mainnet
     source:
-      address: "0xE803fd12232824ad7F0D2f5252c50f5CE5951A84"
+      address: "0x6cab4494f57685f2bce52be490f222701710da1e"
       abi: AYFManager
-      startBlock: 8000000
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -88,44 +65,3 @@ dataSources:
         - event: RedemptionApproved(indexed bytes32,bytes32)
           handler: handleRedemptionApproved
       file: ./src/ayfManager.ts
-  - kind: ethereum
-    name: HYFManager
-    network: sepolia
-    source:
-      address: "0x31931690263C2eE6ab2ccC0Ef1BCFc0E34D326aa"
-      abi: HYFManager
-      startBlock: 8000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - MintRequested
-        # - MintCompleted
-        - PriceIdSetForDeposit
-        - PriceIdSetForRedemption
-        # - ClaimableTimestampSet
-        - RedemptionRequested
-        - RedemptionCompleted
-        - RedemptionRequest
-      abis:
-        - name: HYFManager
-          file: ./abis/HYFManager.json
-      eventHandlers:
-        - event: MintRequested(indexed address,indexed bytes32,uint256,uint256,uint256)
-          handler: handleMintRequestedEvent
-        - event: PriceIdSetForDeposit(indexed bytes32,indexed uint256)
-          handler: handlePriceIdSetForDepositEvent
-        - event: ClaimableTimestampSet(indexed uint256,indexed bytes32)
-          handler: handleClaimableTimestampSetEvent
-        - event: MintCompleted(indexed address,indexed bytes32,uint256,uint256,uint256,uint256)
-          handler: handleMintCompletedEvent
-        - event: RedemptionRequested(indexed address,indexed bytes32,uint256,bytes32)
-          handler: handleRedemptionRequestedEvent
-        - event: RedemptionCompleted(indexed address,indexed bytes32,uint256,uint256,uint256,bytes32)
-          handler: handleRedemptionCompletedEvent
-        - event: PriceIdSetForRedemption(indexed bytes32,indexed uint256,bytes32)
-          handler: handlePriceIdSetForRedemption
-        - event: RedemptionApproved(indexed bytes32,bytes32)
-          handler: handleRedemptionApproved
-      file: ./src/hyfManager.ts
