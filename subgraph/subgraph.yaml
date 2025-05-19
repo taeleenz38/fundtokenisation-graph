@@ -8,7 +8,7 @@ dataSources:
     name: AllowlistUpgradeable
     network: mainnet
     source:
-      address: "0xd1f308f8a7c9b73191b999ca7e9fc5b0a101e596"
+      address: "0x9216eA394D591B29eb018995D1Dbd97648f3cc1c"
       abi: AllowlistUpgradeable
       startBlock: 1
     mapping:
@@ -28,7 +28,7 @@ dataSources:
     name: AYFManager
     network: mainnet
     source:
-      address: "0x6cab4494f57685f2bce52be490f222701710da1e"
+      address: "0x60c9a0A87eDCF29827EbDE814f2f665417183b79"
       abi: AYFManager
       startBlock: 1
     mapping:
